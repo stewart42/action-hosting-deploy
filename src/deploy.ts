@@ -51,7 +51,7 @@ async function execWithCredentials(
   args: string[],
   projectId,
   gacFilename,
-  debug: boolean = false
+  debug: boolean = true
 ) {
   let deployOutputBuf: Buffer[] = [];
   try {
