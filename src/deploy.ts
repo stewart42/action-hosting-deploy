@@ -104,6 +104,8 @@ export async function deploy(gacFilename: string, deployConfig: DeployConfig) {
     gacFilename
   );
 
+  console.log("stewart", "deploy", deploymentText);
+
   const deploymentResult = JSON.parse(deploymentText) as
     | ChannelSuccessResult
     | ErrorResult;
