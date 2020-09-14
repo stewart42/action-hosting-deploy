@@ -107,12 +107,12 @@ export async function deploy(gacFilename: string, deployConfig: DeployConfig) {
   console.log(
     "stewart",
     "deploy",
-    Buffer.from(deploymentText, "utf8").toString("base64")
+    Buffer.from(deploymentText, "utf8").toString("utf8")
   );
 
-  const deploymentResult = JSON.parse(deploymentText) as
-    | ChannelSuccessResult
-    | ErrorResult;
+  const deploymentResult = JSON.parse(
+    Buffer.from(deploymentText, "utf8").toString("utf8")
+  ) as ChannelSuccessResult | ErrorResult;
 
   return deploymentResult;
 }
