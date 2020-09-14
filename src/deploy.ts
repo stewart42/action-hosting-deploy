@@ -67,6 +67,12 @@ async function execWithCredentials(
       {
         listeners: {
           stdout(data: Buffer) {
+            console.log(
+              "stewart",
+              "partial",
+              data.toString("base64"),
+              data.toString()
+            );
             deployOutputBuf.push(data);
           },
         },
@@ -91,7 +97,7 @@ async function execWithCredentials(
     }
   }
 
-  return Buffer.concat(deployOutputBuf).toString("utf-8"); // output from the CLI
+  return deployOutputBuf.pop().toString("utf-8"); // output from the CLI
 }
 
 export async function deploy(gacFilename: string, deployConfig: DeployConfig) {
@@ -104,15 +110,18 @@ export async function deploy(gacFilename: string, deployConfig: DeployConfig) {
     gacFilename
   );
 
+  const encoded = Buffer.from(deploymentText, "utf8").toString("base64");
+
   console.log(
     "stewart",
     "deploy",
-    Buffer.from(deploymentText, "utf8").toString("utf8")
+    encoded,
+    Buffer.from(encoded, "base64").toString()
   );
 
-  const deploymentResult = JSON.parse(
-    Buffer.from(deploymentText, "utf8").toString("utf8")
-  ) as ChannelSuccessResult | ErrorResult;
+  const deploymentResult = JSON.parse(deploymentText) as
+    | ChannelSuccessResult
+    | ErrorResult;
 
   return deploymentResult;
 }
